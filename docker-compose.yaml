@@ -14,6 +14,7 @@ include:
   - apps/homepage/docker-compose.yaml
   - apps/openspeedtest.yaml
   - apps/portainer.yaml
+  - apps/stirlingpdf.yaml
 
 ##########################################################################
 # NETWORK CONFIGURATION
