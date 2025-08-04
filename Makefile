@@ -23,6 +23,14 @@ down: ## Stop the service(s)*
 stop: ## Stop the service(s)*
 	docker compose --project-directory "$(ROOT_DIR)" --profile all stop $(APP) $(ARGS)
 
+.PHONY: logs
+logs: ## Show the logs*
+	docker compose --project-directory "$(ROOT_DIR)" --profile all logs $(APP) -ft $(ARGS)
+
+.PHONY: restart
+restart: ## Restart the service(s)*
+	docker compose --project-directory "$(ROOT_DIR)" --profile all restart  $(APP) $(ARGS)
+
 ##@ General 🌐
 
 .PHONY: version

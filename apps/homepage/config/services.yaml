@@ -1,0 +1,28 @@
+---
+# For configuration options and examples, please see:
+# https://github.com/benphelps/homepage/wiki/Services
+
+- Applications:
+  - Home Assistant:
+      icon: home-assistant.png
+      # href: http://{{HOMEPAGE_VAR_IP}}:8123/
+      href: https://ha.{{HOMEPAGE_VAR_DOMAIN_NAME}}/
+      description: Home automation platform
+
+- Infrastructure:
+  - Proxmox:
+      icon: proxmox.png
+      # href: https://{{HOMEPAGE_VAR_IP}}:8006
+      href: https://proxmox.{{HOMEPAGE_VAR_DOMAIN_NAME}}/
+      description: Main Proxmox server
+      widget:
+        type: proxmox
+        url: https://{{HOMEPAGE_VAR_PROXMOX_IP}}:8006
+        username: {{HOMEPAGE_VAR_PROXMOX_USERNAME}}
+        password: {{HOMEPAGE_VAR_PROXMOX_PASSWORD}}
+        node: pve # optional
+  - SFR - Box:
+      icon: router.png
+      # href: http://{{HOMEPAGE_VAR_IP}}/
+      href: https://box.{{HOMEPAGE_VAR_DOMAIN_NAME}}/
+      description: SFR Box

@@ -1,0 +1,21 @@
+---
+
+services:
+  homepage:
+    container_name: homepage
+    image: ghcr.io/gethomepage/homepage:latest
+    profiles: ["utilities", "all"]
+    restart: always
+    networks:
+      traefik:
+    ports:
+      - 3000:3000
+    volumes:
+      - ${DOCKER_DIRECTORY}/apps/homepage/config/:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${DOMAIN_NAME},${HOMEPAGE_HOST}
+      HOMEPAGE_VAR_DOMAIN_NAME: ${HOMEPAGE_VAR_DOMAIN_NAME}
+      HOMEPAGE_VAR_PROXMOX_IP: ${HOMEPAGE_VAR_PROXMOX_IP}
+      HOMEPAGE_VAR_PROXMOX_USERNAME: ${HOMEPAGE_VAR_PROXMOX_USERNAME}
+      HOMEPAGE_VAR_PROXMOX_PASSWORD: ${HOMEPAGE_VAR_PROXMOX_PASSWORD}

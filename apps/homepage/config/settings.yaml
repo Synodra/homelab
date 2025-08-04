@@ -1,0 +1,18 @@
+title: {{HOMEPAGE_VAR_DOMAIN_NAME}}
+startUrl: https://{{HOMEPAGE_VAR_DOMAIN_NAME}}
+instanceName: local
+
+theme: dark
+color: slate
+
+layout:
+  Applications:
+      style: row
+      columns: 4
+  Infrastructure:
+    style: column
+    columns: 4
+  Networking:
+    style: column
+    columns: 4
+
