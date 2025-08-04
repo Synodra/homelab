@@ -1,0 +1,26 @@
+---
+volumes:
+  portainer-data: {}
+
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce
+    profiles: ["utilities", "all"]
+    restart: unless-stopped
+    networks:
+      traefik:
+    ports:
+      - 8000:8000
+      - 9443:9443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER_DIRECTORY}/appdata/portainer:/data
+    labels:
+      - homepage.group=Infrastructure
+      - homepage.name=Portainer
+      - homepage.icon=portainer.png
+      - homepage.href=https://portainer.${DOMAIN_NAME}/
+      - homepage.description=Lightweight docker managment interface
+      - homepage.server=localhost
+      - homepage.container=portainer
