@@ -1,0 +1,24 @@
+
+services:
+  openspeedtest:
+    container_name: openspeedtest
+    image: openspeedtest/latest
+    profiles: ["utilities", "all"]
+    restart: unless-stopped
+    networks:
+      traefik:
+    ports:
+      - '3001:3000'
+      - '3002:3001'
+    environment:
+      - ENABLE_LETSENCRYPT=True
+      - DOMAIN_NAME=rpi.lan
+      - USER_EMAIL=you@yourdomain.com
+    labels:
+      - homepage.group=Networking
+      - homepage.name=Open Speed Test
+      - homepage.icon=openspeedtest.png
+      - homepage.href=https://fast.${DOMAIN_NAME}/
+      - homepage.description=Speed Test
+      - homepage.server=localhost
+      - homepage.container=openspeedtest
