@@ -6,6 +6,7 @@ ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 update: ## Update the service(s) *
 	docker compose --project-directory "$(ROOT_DIR)" --profile all pull $(APP)
 	docker compose --project-directory "$(ROOT_DIR)" --profile all up -d $(APP)
+# 	docker image prune -af
 
 .PHONY: pull
 pull: ## Pull the latest image(s)*
@@ -30,6 +31,21 @@ logs: ## Show the logs*
 .PHONY: restart
 restart: ## Restart the service(s)*
 	docker compose --project-directory "$(ROOT_DIR)" --profile all restart  $(APP) $(ARGS)
+
+##@ Configuration 🪛
+
+.PHONY: config-acme
+config-acme: ## Initialize the acme.json file.
+	mkdir -p appdata/traefik/acme/
+	rm -f appdata/traefik/acme/acme.json
+	touch appdata/traefik/acme/acme.json
+	chmod 600 appdata/traefik/acme/acme.json
+
+.PHONY: config-cert
+config-cert: ## Initialize the *.home.lan cert.
+	mkdir -p appdata/traefik/certs
+	rm -f appdata/traefik/certs/local.crt appdata/traefik/certs/local.key
+	mkcert -cert-file appdata/traefik/certs/local.crt -key-file appdata/traefik/certs/local.key "home.lan" "*.home.lan"
 
 ##@ General 🌐
 

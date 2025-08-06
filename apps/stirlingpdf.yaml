@@ -9,8 +9,8 @@ services:
     hostname: stirling-pdf
     networks:
       traefik:
-    ports:
-      - '3010:8080'
+    # ports:
+    #   - '3010:8080'
     environment:
       - DOCKER_ENABLE_SECURITY=false
       - LANGS=en_US
@@ -27,3 +27,9 @@ services:
       - homepage.description=Tooling for PDF
       - homepage.container=stirling-pdf
       - homepage.href=https://pdf.${DOMAIN_NAME}/
+      - traefik.enable=true
+      - traefik.http.routers.stirlingpdf.rule=Host(`pdf.home.lan`)
+      - traefik.http.routers.stirlingpdf.entrypoints=web
+      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.stirlingpdf.service=stirlingpdf-srv
+      - traefik.http.services.stirlingpdf-srv.loadbalancer.server.port=8080

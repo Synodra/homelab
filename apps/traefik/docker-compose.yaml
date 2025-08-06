@@ -1,0 +1,57 @@
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v3.5
+    profiles: ["core", "all"]
+    restart: unless-stopped
+    networks:
+      traefik:
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER_DIRECTORY}/apps/traefik/rules:/rules
+      - ${DOCKER_DIRECTORY}/appdata/traefik/logs:/logs
+      - ${DOCKER_DIRECTORY}/appdata/traefik/certs:/certs:ro
+    command:
+      # API SETTINGS
+      - --api=true
+      - --api.dashboard=true
+      - --api.insecure=true
+      # LOGGING SETTINGS
+      - --log=true
+      - --log.level=DEBUG # DEBUG, INFO, WARN, ERROR, FATAL, PANIC
+      - --accessLog=true
+      - --accessLog.format=json
+      - --accessLog.filePath=/logs/access.log
+      - --accessLog.bufferingSize=100
+      - --accessLog.filters.statusCodes=204-299,400-499,500-599
+      # PROVIDERS
+      - --providers.docker=true
+      # - --providers.docker.endpoint=tcp://socket-proxy:2375
+      - --providers.docker.exposedByDefault=false
+      - --providers.docker.network=homelab_traefik
+      - --providers.file.directory=/rules
+      - --providers.file.watch=true
+      # ENTRYPOINTS
+      - --entrypoints.web.address=:80
+      # - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      # - --entrypoints.web.http.redirections.entrypoint.scheme=websecure
+      # - --entrypoints.web.http.redirections.entrypoint.permanent=true
+      # - --entrypoints.websecure.address=:443
+      # - --entrypoints.websecure.asDefault=true
+      # - --entryPoints.websecure.http.tls.certResolver=defaultCertificate
+      # - --entryPoints.websecure.http.tls.domains[0].main=${DOMAIN_NAME}
+      # - --entrypoints.websecure.http.tls.domains[0].sans=*.${DOMAIN_NAME}
+      - --entrypoints.traefik.address=:8080
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.http.routers.traefik.rule=Host(`traefik.home.lan`)
+      # - traefik.http.routers.traefik.tls=true
+      - traefik.http.routers.traefik.service=api@internal
+
+      

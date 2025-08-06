@@ -8,14 +8,21 @@ services:
     restart: always
     networks:
       traefik:
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     volumes:
       - ${DOCKER_DIRECTORY}/apps/homepage/config/:/app/config
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       HOMEPAGE_ALLOWED_HOSTS: ${DOMAIN_NAME},${HOMEPAGE_HOST}
-      HOMEPAGE_VAR_DOMAIN_NAME: ${HOMEPAGE_VAR_DOMAIN_NAME}
-      HOMEPAGE_VAR_PROXMOX_IP: ${HOMEPAGE_VAR_PROXMOX_IP}
+      HOMEPAGE_VAR_DOMAIN_NAME: ${DOMAIN_NAME}
+      HOMEPAGE_VAR_PROXMOX_IP: ${PROXMOX_IP}
       HOMEPAGE_VAR_PROXMOX_USERNAME: ${HOMEPAGE_VAR_PROXMOX_USERNAME}
       HOMEPAGE_VAR_PROXMOX_PASSWORD: ${HOMEPAGE_VAR_PROXMOX_PASSWORD}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homepage.rule=Host(`home.lan`)
+      - traefik.http.routers.homepage.entrypoints=web
+      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.homepage.service=homepage-srv
+      - traefik.http.services.homepage-srv.loadbalancer.server.port=3000

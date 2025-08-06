@@ -10,9 +10,9 @@ services:
     restart: unless-stopped
     networks:
       traefik:
-    ports:
-      - 8000:8000
-      - 9443:9443
+    # ports:
+    #   - 8000:8000
+    #   - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DOCKER_DIRECTORY}/appdata/portainer:/data
@@ -24,3 +24,9 @@ services:
       - homepage.description=Lightweight docker managment interface
       - homepage.server=localhost
       - homepage.container=portainer
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`portainer.home.lan`)
+      - traefik.http.routers.portainer.entrypoints=web
+      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.portainer.service=portainer-srv
+      - traefik.http.services.portainer-srv.loadbalancer.server.port=8000

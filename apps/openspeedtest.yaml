@@ -7,12 +7,12 @@ services:
     restart: unless-stopped
     networks:
       traefik:
-    ports:
-      - '3001:3000'
-      - '3002:3001'
+    # ports:
+    #   - '80:3000'
+    #   - '443:3001'
     environment:
-      - ENABLE_LETSENCRYPT=True
-      - DOMAIN_NAME=rpi.lan
+      # - ENABLE_LETSENCRYPT=True
+      # - DOMAIN_NAME=${DOMAIN_NAME}
       - USER_EMAIL=you@yourdomain.com
     labels:
       - homepage.group=Networking
@@ -22,3 +22,9 @@ services:
       - homepage.description=Speed Test
       - homepage.server=localhost
       - homepage.container=openspeedtest
+      - traefik.enable=true
+      - traefik.http.routers.openspeedtest.rule=Host(`fast.home.lan`)
+      - traefik.http.routers.openspeedtest.entrypoints=web
+      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.openspeedtest.service=openspeedtest-srv
+      - traefik.http.services.openspeedtest-srv.loadbalancer.server.port=3000
