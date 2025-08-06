@@ -8,7 +8,7 @@ services:
       - traefik.enable=true
       # - traefik.http.routers.whoami.rule=Host(`whoami.${DOMAIN_NAME}`)
       - traefik.http.routers.whoami.rule=(Host(`${DOMAIN_NAME}`) && Path(`/whoami`))
-      - traefik.http.routers.whoami.entrypoints=web
-      # - traefik.http.routers.whoami.tls={}
+      - traefik.http.routers.whoami.entrypoints=websecure
+      - traefik.http.routers.whoami.tls={}
       - traefik.http.routers.whoami.service=whoami
       - traefik.http.services.whoami.loadbalancer.server.port=80

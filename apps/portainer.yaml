@@ -26,7 +26,7 @@ services:
       - homepage.container=portainer
       - traefik.enable=true
       - traefik.http.routers.portainer.rule=Host(`portainer.home.lan`)
-      - traefik.http.routers.portainer.entrypoints=web
-      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.portainer.entrypoints=websecure
+      - traefik.http.routers.portainer.tls={}
       - traefik.http.routers.portainer.service=portainer-srv
       - traefik.http.services.portainer-srv.loadbalancer.server.port=8000

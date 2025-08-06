@@ -12,7 +12,7 @@ services:
     #   - '443:3001'
     environment:
       # - ENABLE_LETSENCRYPT=True
-      # - DOMAIN_NAME=${DOMAIN_NAME}
+      - DOMAIN_NAME=${DOMAIN_NAME}
       - USER_EMAIL=you@yourdomain.com
     labels:
       - homepage.group=Networking
@@ -24,7 +24,7 @@ services:
       - homepage.container=openspeedtest
       - traefik.enable=true
       - traefik.http.routers.openspeedtest.rule=Host(`fast.home.lan`)
-      - traefik.http.routers.openspeedtest.entrypoints=web
-      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.openspeedtest.entrypoints=websecure
+      - traefik.http.routers.openspeedtest.tls={}
       - traefik.http.routers.openspeedtest.service=openspeedtest-srv
       - traefik.http.services.openspeedtest-srv.loadbalancer.server.port=3000

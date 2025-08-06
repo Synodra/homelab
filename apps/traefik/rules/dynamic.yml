@@ -14,3 +14,9 @@ tls:
       defaultCertificate:
         certFile: /certs/local.crt
         keyFile: /certs/local.key
+
+# tcp:
+#   routers:
+#     openspeedtest:
+#       tls:
+#         passthrough: true

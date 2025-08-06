@@ -29,7 +29,7 @@ services:
       - homepage.href=https://pdf.${DOMAIN_NAME}/
       - traefik.enable=true
       - traefik.http.routers.stirlingpdf.rule=Host(`pdf.home.lan`)
-      - traefik.http.routers.stirlingpdf.entrypoints=web
-      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.stirlingpdf.entrypoints=websecure
+      - traefik.http.routers.stirlingpdf.tls={}
       - traefik.http.routers.stirlingpdf.service=stirlingpdf-srv
       - traefik.http.services.stirlingpdf-srv.loadbalancer.server.port=8080

@@ -22,7 +22,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.homepage.rule=Host(`home.lan`)
-      - traefik.http.routers.homepage.entrypoints=web
-      # - traefik.http.routers.openspeedtest.tls={}
+      - traefik.http.routers.homepage.entrypoints=websecure
+      - traefik.http.routers.homepage.tls={}
       - traefik.http.routers.homepage.service=homepage-srv
       - traefik.http.services.homepage-srv.loadbalancer.server.port=3000
